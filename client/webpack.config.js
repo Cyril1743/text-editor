@@ -26,18 +26,28 @@ module.exports = () => {
         title: "Webpack"
       }),
       new InjectManifest({
-        swSrc: "src-sw.js",
-        swDest: "service-worker.js"
+        swSrc: "./src-sw.js",
+        swDest: "src-sw.js"
       }),
       new WebpackPwaManifest({
-        name: 'Text Editor',
-        short_name: "Text Editor",
+        name: 'Just Another Text Editor',
+        short_name: "J.A.T.E.",
+        description: "Takes notes with JavaScript syntax highlighting",
         start_url: "./",
+        orientation: "portrait",
+        display: "standalone",
+        background_color: "#225ca3",
+        theme_color: "#225ca3",
+        filename: 'manifest.js',
+        publicPath: "./",
+        fingerprints: false,
         icons: [
           {
-            src: path.join(__dirname, "/src/images/logo.png"),
+            src: "./src/images/logo.png",
             sizes: [96, 128, 256, 384, 512],
-            purpose: ["any", "maskable"]
+            purpose: "any maskable",
+            destination: "./assets/icons",
+            
           }
         ]
       })
@@ -46,7 +56,7 @@ module.exports = () => {
     module: {
       rules: [
         {
-          test: /^\.css$/i,
+          test: /\.css$/i,
           use: ['style-loader', 'css-loader']
         }, {
           test: /^\.m?js$/,
@@ -55,7 +65,7 @@ module.exports = () => {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env'],
-              plugins: ['@babel/transform-runtime']
+              plugins: ['@babel/transform-runtime', '@babel/plugin-proposal-object-rest-spread']
             }
           }
         }
